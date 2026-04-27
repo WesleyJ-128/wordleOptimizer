@@ -30,6 +30,30 @@ def score(guess_str: str, answer_str: str) -> list[int]:
         guess[index] = GUESS_NULL
     return score
 
-while True:
-    print(score(input(), answer))
-    print(answer)
+GUESS_LIST = "guesslist.txt"
+ANSWER_LIST = "answerlist.txt"
+
+with open(GUESS_LIST) as file:
+    guess_list = file.readlines()
+    guess_list = [x.strip() for x in guess_list]
+with open(ANSWER_LIST) as file:
+    answer_list = file.readlines()
+    answer_list = [x.strip() for x in answer_list]
+
+best_num_groups = 0
+best_words = []
+for word in guess_list:
+    groups = []
+    for answer in answer_list:
+        pattern = score(word, answer)
+        if pattern not in groups:
+            groups.append(pattern)
+    num = len(groups)
+    if num > best_num_groups:
+        best_num_groups = num
+        best_words = [word]
+    elif num == best_num_groups:
+        best_words.append(word)
+
+print(best_words)
+print(best_num_groups)
