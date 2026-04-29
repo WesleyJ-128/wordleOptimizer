@@ -1,16 +1,8 @@
 import jsonpickle
 from copy import copy
-class Pattern():
-    def __init__(self, pattern: list[int]):
-        self.pattern = pattern
-    def __eq__(self, value):
-        return self.pattern == value.pattern
-    def __hash__(self):
-        return str(self.pattern).__hash__()
-    def __repr__(self):
-        return str(self.pattern)
+import Pattern
 
-def score(guess_str: str, answer_str: str) -> list[int]:
+def score(guess_str: str, answer_str: str) -> Pattern:
     GUESS_NULL = "+"
     ANS_NULL = "-"
     
@@ -38,7 +30,7 @@ def score(guess_str: str, answer_str: str) -> list[int]:
         index = guess.index(letter)
         score[index] = 1
         guess[index] = GUESS_NULL
-    return Pattern(score)
+    return Pattern.Pattern(score)
 
 GUESS_LIST = "guesslist.txt"
 ANSWER_LIST = "answerlist.txt"
@@ -71,8 +63,15 @@ def generate_word_data(guess_file, answer_file, out_file):
             best_words = [word]
         elif num == best_num_groups:
             best_words.append(word)
+        print(word)
 
     with open(out_file, "x") as f:
         f.write(jsonpickle.encode(copy(all_data), indent=4))
     
     return (best_words, best_num_groups)
+
+#generate_word_data(GUESS_LIST, ANSWER_LIST, "groupdata2.json")
+with open("groupdata2.json", "r") as f:
+    word_dict = jsonpickle.decode(f.read())
+pattern = Pattern.Pattern([1, 0, 1, 0, 2])
+print(word_dict["aahed"][str(pattern)])
