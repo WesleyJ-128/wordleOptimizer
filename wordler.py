@@ -1,6 +1,13 @@
-class Pattern:
+import jsonpickle
+class Pattern():
     def __init__(self, pattern: list[int]):
         self.pattern = pattern
+    def __eq__(self, value):
+        return self.pattern == value.pattern
+    def __hash__(self):
+        return str(self.pattern).__hash__()
+    def __repr__(self):
+        return str(self.pattern)
 
 def score(guess_str: str, answer_str: str) -> list[int]:
     GUESS_NULL = "+"
@@ -30,7 +37,7 @@ def score(guess_str: str, answer_str: str) -> list[int]:
         index = guess.index(letter)
         score[index] = 1
         guess[index] = GUESS_NULL
-    return score
+    return Pattern(score)
 
 GUESS_LIST = "guesslist.txt"
 ANSWER_LIST = "answerlist.txt"
@@ -44,12 +51,18 @@ with open(ANSWER_LIST) as file:
 
 best_num_groups = 0
 best_words = []
+all_data = {}
 for word in guess_list:
     groups = []
+    patterns = {}
     for answer in answer_list:
         pattern = score(word, answer)
-        if pattern not in groups:
+        if pattern not in patterns:
             groups.append(pattern)
+            patterns[pattern] = [answer]
+        else:
+            patterns[pattern].append(answer)
+    all_data[word] = patterns
     num = len(groups)
     if num > best_num_groups:
         best_num_groups = num
@@ -59,3 +72,10 @@ for word in guess_list:
 
 print(best_words)
 print(best_num_groups)
+
+try:
+    with open("groupdata.json", "x") as f:
+        f.write(jsonpickle.encode(all_data, indent=4))
+except FileExistsError:
+    with open("groupdata.json", "w") as f:
+        f.write(jsonpickle.encode(all_data, indent=4))
