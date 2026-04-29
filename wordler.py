@@ -1,4 +1,6 @@
-answer = "tryst"
+class Pattern:
+    def __init__(self, pattern: list[int]):
+        self.pattern = pattern
 
 def score(guess_str: str, answer_str: str) -> list[int]:
     GUESS_NULL = "+"
