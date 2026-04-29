@@ -43,36 +43,36 @@ def score(guess_str: str, answer_str: str) -> list[int]:
 GUESS_LIST = "guesslist.txt"
 ANSWER_LIST = "answerlist.txt"
 
-with open(GUESS_LIST) as file:
-    guess_list = file.readlines()
-    guess_list = [x.strip() for x in guess_list]
-with open(ANSWER_LIST) as file:
-    answer_list = file.readlines()
-    answer_list = [x.strip() for x in answer_list]
+def generate_word_data(guess_file, answer_file, out_file):
+    with open(guess_file) as file:
+        guess_list = file.readlines()
+        guess_list = [x.strip() for x in guess_list]
+    with open(answer_file) as file:
+        answer_list = file.readlines()
+        answer_list = [x.strip() for x in answer_list]
 
-best_num_groups = 0
-best_words = []
-all_data = {}
-for word in guess_list:
-    groups = []
-    patterns = {}
-    for answer in answer_list:
-        pattern = score(word, answer)
-        if pattern not in patterns:
-            groups.append(pattern)
-            patterns[pattern] = [answer]
-        else:
-            patterns[pattern].append(answer)
-    all_data[word] = patterns
-    num = len(groups)
-    if num > best_num_groups:
-        best_num_groups = num
-        best_words = [word]
-    elif num == best_num_groups:
-        best_words.append(word)
+    best_num_groups = 0
+    best_words = []
+    all_data = {}
+    for word in guess_list:
+        groups = []
+        patterns = {}
+        for answer in answer_list:
+            pattern = score(word, answer)
+            if pattern not in patterns:
+                groups.append(pattern)
+                patterns[pattern] = [answer]
+            else:
+                patterns[pattern].append(answer)
+        all_data[word] = patterns
+        num = len(groups)
+        if num > best_num_groups:
+            best_num_groups = num
+            best_words = [word]
+        elif num == best_num_groups:
+            best_words.append(word)
 
-print(best_words)
-print(best_num_groups)
-
-with open("groupdata.json", "x") as f:
-    f.write(jsonpickle.encode(copy(all_data), indent=4))
+    with open(out_file, "x") as f:
+        f.write(jsonpickle.encode(copy(all_data), indent=4))
+    
+    return (best_words, best_num_groups)
