@@ -1,4 +1,5 @@
 import jsonpickle
+from copy import copy
 class Pattern():
     def __init__(self, pattern: list[int]):
         self.pattern = pattern
@@ -73,9 +74,5 @@ for word in guess_list:
 print(best_words)
 print(best_num_groups)
 
-try:
-    with open("groupdata.json", "x") as f:
-        f.write(jsonpickle.encode(all_data, indent=4))
-except FileExistsError:
-    with open("groupdata.json", "w") as f:
-        f.write(jsonpickle.encode(all_data, indent=4))
+with open("groupdata.json", "x") as f:
+    f.write(jsonpickle.encode(copy(all_data), indent=4))
