@@ -35,14 +35,7 @@ def score(guess_str: str, answer_str: str) -> Pattern:
 GUESS_LIST = "guesslist.txt"
 ANSWER_LIST = "answerlist.txt"
 
-def generate_word_data(guess_file, answer_file, out_file):
-    with open(guess_file) as file:
-        guess_list = file.readlines()
-        guess_list = [x.strip() for x in guess_list]
-    with open(answer_file) as file:
-        answer_list = file.readlines()
-        answer_list = [x.strip() for x in answer_list]
-
+def generate_word_data(guess_list, answer_list):
     best_num_groups = 0
     best_words = []
     all_data = {}
@@ -64,14 +57,31 @@ def generate_word_data(guess_file, answer_file, out_file):
         elif num == best_num_groups:
             best_words.append(word)
         print(word)
-
-    with open(out_file, "x") as f:
-        f.write(jsonpickle.encode(copy(all_data), indent=4))
     
-    return (best_words, best_num_groups)
+    return (all_data, best_num_groups, best_words)
 
-#generate_word_data(GUESS_LIST, ANSWER_LIST, "groupdata2.json")
+# with open(GUESS_LIST) as file:
+#     guess_list = file.readlines()
+#     guess_list = [x.strip() for x in guess_list]
+# with open(ANSWER_LIST) as file:
+#     answer_list = file.readlines()
+#     answer_list = [x.strip() for x in answer_list]
+
+# all_data = generate_word_data(guess_list, answer_list)[0]
+
+# with open("guessdata.json", "x") as f:
+#         f.write(jsonpickle.encode(copy(all_data), indent=4))
+
+
+
+
 with open("groupdata2.json", "r") as f:
     word_dict = jsonpickle.decode(f.read())
-pattern = Pattern.Pattern([1, 0, 1, 0, 2])
-print(word_dict["aahed"][str(pattern)])
+
+while True:
+    guess = input("Enter your guess: ")
+    raw_pattern = input("Enter colors (g for green, y for yellow, x for none): ")
+    if len(guess) != 5 or len(raw_pattern) != 5 or set(raw_pattern) != {"g", "y", "x"}:
+        print("Invalid guess or clue pattern")
+        continue
+    pattern = str(list(raw_pattern.replace("g", 2).replace("y", 1).replace("x", 0)))
