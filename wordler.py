@@ -98,3 +98,4 @@ while True:
         print(best_word)
     else:
         print(f"Best possible-solution guesses: {bestest_words}")
+    print(best_num)
