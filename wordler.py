@@ -1,4 +1,4 @@
-import jsonpickle
+import json
 from copy import copy
 import Pattern
 
@@ -44,11 +44,11 @@ def generate_word_data(guess_list, answer_list):
         patterns = {}
         for answer in answer_list:
             pattern = score(word, answer)
-            if pattern not in patterns:
+            if str(pattern) not in patterns:
                 groups.append(pattern)
-                patterns[pattern] = [answer]
+                patterns[str(pattern)] = [answer]
             else:
-                patterns[pattern].append(answer)
+                patterns[str(pattern)].append(answer)
         all_data[word] = patterns
         num = len(groups)
         if num > best_num_groups:
@@ -56,13 +56,13 @@ def generate_word_data(guess_list, answer_list):
             best_words = [word]
         elif num == best_num_groups:
             best_words.append(word)
-        print(word)
+        #print(word)
     
     return (all_data, best_num_groups, best_words)
 
-# with open(GUESS_LIST) as file:
-#     guess_list = file.readlines()
-#     guess_list = [x.strip() for x in guess_list]
+with open(GUESS_LIST) as file:
+    guess_list = file.readlines()
+    guess_list = [x.strip() for x in guess_list]
 # with open(ANSWER_LIST) as file:
 #     answer_list = file.readlines()
 #     answer_list = [x.strip() for x in answer_list]
@@ -70,18 +70,31 @@ def generate_word_data(guess_list, answer_list):
 # all_data = generate_word_data(guess_list, answer_list)[0]
 
 # with open("guessdata.json", "x") as f:
-#         f.write(jsonpickle.encode(copy(all_data), indent=4))
+#         f.write(json.dumps(copy(all_data), indent=4))
 
 
 
 
-with open("groupdata2.json", "r") as f:
-    word_dict = jsonpickle.decode(f.read())
+with open("groupdata.json", "r") as f:
+    word_dict = json.loads(f.read())
+FILE_DICT = word_dict
 
 while True:
     guess = input("Enter your guess: ")
     raw_pattern = input("Enter colors (g for green, y for yellow, x for none): ")
-    if len(guess) != 5 or len(raw_pattern) != 5 or set(raw_pattern) != {"g", "y", "x"}:
+    if len(guess) != 5 or len(raw_pattern) != 5 or not set(raw_pattern).issubset({"g", "y", "x"}):
         print("Invalid guess or clue pattern")
         continue
-    pattern = str(list(raw_pattern.replace("g", 2).replace("y", 1).replace("x", 0)))
+    pattern = str([int(x) for x in list(raw_pattern.replace("g", "2").replace("y", "1").replace("x", "0"))])
+    answers = word_dict[guess][pattern]
+    if len(answers) == 1:
+        print(f"Solution: {answers[0]}")
+        print("Dictionary reset, play again")
+        word_dict = FILE_DICT
+        continue
+    (word_dict, best_num, best_word) = generate_word_data(guess_list, answers)
+    bestest_words = [x for x in best_word if x in answers]
+    if not bestest_words:
+        print(best_word)
+    else:
+        print(f"Best possible-solution guesses: {bestest_words}")
