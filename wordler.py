@@ -75,29 +75,40 @@ with open(GUESS_LIST) as file:
 #         f.write(json.dumps(all_data[guess], indent=4))
 
 
-
+def prompt_guess():
+    guess = input("Enter your guess: ")
+    raw_pattern = input("Enter colors (g for green, y for yellow, x for none): ")
+    if len(guess) != 5 or len(raw_pattern) != 5 or not set(raw_pattern).issubset({"g", "y", "x"}):
+        print("Invalid guess or clue pattern")
+        raise ValueError
+    pattern = str([int(x) for x in list(raw_pattern.replace("g", "2").replace("y", "1").replace("x", "0"))])
+    return (guess, pattern)
 
 # with open("groupdata.json", "r") as f:
 #     word_dict = json.loads(f.read())
 # FILE_DICT = word_dict
 
-# while True:
-#     guess = input("Enter your guess: ")
-#     raw_pattern = input("Enter colors (g for green, y for yellow, x for none): ")
-#     if len(guess) != 5 or len(raw_pattern) != 5 or not set(raw_pattern).issubset({"g", "y", "x"}):
-#         print("Invalid guess or clue pattern")
-#         continue
-#     pattern = str([int(x) for x in list(raw_pattern.replace("g", "2").replace("y", "1").replace("x", "0"))])
-#     answers = word_dict[guess][pattern]
-#     if len(answers) == 1:
-#         print(f"Solution: {answers[0]}")
-#         print("Dictionary reset, play again")
-#         word_dict = FILE_DICT
-#         continue
-#     (word_dict, best_num, best_word) = generate_word_data(guess_list, answers)
-#     bestest_words = [x for x in best_word if x in answers]
-#     if not bestest_words:
-#         print(best_word)
-#     else:
-#         print(f"Best possible-solution guesses: {bestest_words}")
-#     print(best_num)
+word_dict = None
+while True:
+    try:
+        (guess, pattern) = prompt_guess()
+    except ValueError:
+        continue
+    if not word_dict:
+        with open(os.path.join("groupsdata", f"{guess}.json"), "r") as f:
+            word_dict = json.loads(f.read())
+        answers = word_dict[pattern]
+    else:
+        answers = word_dict[guess][pattern]
+    if len(answers) == 1:
+        print(f"Solution: {answers[0]}")
+        print("Dictionary reset, play again")
+        word_dict = None
+        continue
+    (word_dict, best_num, best_word) = generate_word_data(guess_list, answers)
+    bestest_words = [x for x in best_word if x in answers]
+    if not bestest_words:
+        print(best_word)
+    else:
+        print(f"Best possible-solution guesses: {bestest_words}")
+    print(best_num)
