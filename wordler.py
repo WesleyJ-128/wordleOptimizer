@@ -84,10 +84,6 @@ def prompt_guess():
     pattern = str([int(x) for x in list(raw_pattern.replace("g", "2").replace("y", "1").replace("x", "0"))])
     return (guess, pattern)
 
-# with open("groupdata.json", "r") as f:
-#     word_dict = json.loads(f.read())
-# FILE_DICT = word_dict
-
 word_dict = None
 while True:
     try:
