@@ -504,6 +504,7 @@
         "plain",
         "slain",
         "spawn",
+        "waken",
         "waxen"
     ],
     "[1, 0, 2, 1, 0]": [

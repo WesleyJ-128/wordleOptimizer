@@ -461,7 +461,8 @@
         "stain",
         "taken",
         "train",
-        "wagon"
+        "wagon",
+        "waken"
     ],
     "[0, 0, 1, 1, 0]": [
         "adult",

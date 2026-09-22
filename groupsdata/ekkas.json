@@ -843,7 +843,8 @@
         "maker",
         "oaken",
         "taken",
-        "taker"
+        "taker",
+        "waken"
     ],
     "[1, 0, 2, 1, 1]": [
         "askew"

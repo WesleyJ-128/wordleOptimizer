@@ -2412,7 +2412,8 @@
         "liken",
         "maker",
         "taken",
-        "taker"
+        "taker",
+        "waken"
     ],
     "[0, 2, 0, 2, 1]": [
         "loser",

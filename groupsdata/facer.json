@@ -739,6 +739,7 @@
         "payee",
         "taken",
         "valet",
+        "waken",
         "waxen"
     ],
     "[0, 2, 0, 2, 2]": [

@@ -780,7 +780,8 @@
         "panel",
         "payee",
         "taken",
-        "valet"
+        "valet",
+        "waken"
     ],
     "[1, 2, 0, 2, 0]": [
         "baker",

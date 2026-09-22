@@ -1807,7 +1807,8 @@
         "liken",
         "maker",
         "taken",
-        "taker"
+        "taker",
+        "waken"
     ],
     "[1, 0, 0, 1, 2]": [
         "bless",

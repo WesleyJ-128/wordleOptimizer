@@ -2135,7 +2135,8 @@
         "liken",
         "maker",
         "taken",
-        "taker"
+        "taker",
+        "waken"
     ],
     "[0, 1, 1, 1, 0]": [
         "awoke",

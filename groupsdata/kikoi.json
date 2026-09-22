@@ -2153,7 +2153,8 @@
         "baker",
         "maker",
         "taken",
-        "taker"
+        "taker",
+        "waken"
     ],
     "[0, 1, 0, 1, 0]": [
         "audio",

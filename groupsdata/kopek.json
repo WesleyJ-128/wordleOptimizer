@@ -2078,7 +2078,8 @@
         "maker",
         "skier",
         "taken",
-        "taker"
+        "taker",
+        "waken"
     ],
     "[1, 1, 0, 1, 0]": [
         "awoke",

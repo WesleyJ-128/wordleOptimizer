@@ -2401,6 +2401,11 @@
         "welch",
         "wench"
     ],
+    "[2, 0, 0, 1, 0]": [
+        "waken",
+        "woken",
+        "wreak"
+    ],
     "[2, 0, 1, 1, 0]": [
         "whack",
         "wrack",
@@ -2435,9 +2440,5 @@
         "wince",
         "winch",
         "witch"
-    ],
-    "[2, 0, 0, 1, 0]": [
-        "woken",
-        "wreak"
     ]
 }

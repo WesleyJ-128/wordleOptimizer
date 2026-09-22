@@ -2405,6 +2405,12 @@
         "waltz",
         "willy"
     ],
+    "[2, 1, 0, 1, 0]": [
+        "waken",
+        "woken",
+        "wreak",
+        "wreck"
+    ],
     "[2, 2, 0, 0, 0]": [
         "weary",
         "weigh",
@@ -2448,10 +2454,5 @@
         "world",
         "would",
         "wryly"
-    ],
-    "[2, 1, 0, 1, 0]": [
-        "woken",
-        "wreak",
-        "wreck"
     ]
 }
