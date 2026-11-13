@@ -4,6 +4,7 @@ import Pattern
 import os.path
 
 regen_data = False
+hard_mode = True
 
 def score(guess_str: str, answer_str: str) -> Pattern.Pattern:
     GUESS_NULL = "+"
@@ -105,7 +106,7 @@ while True:
         print("Dictionary reset, play again")
         word_dict = None
         continue
-    (word_dict, best_num, best_word) = generate_word_data(guess_list, answers)
+    (word_dict, best_num, best_word) = generate_word_data(answers if hard_mode else guess_list, answers)
     bestest_words = [x for x in best_word if x in answers]
     if not bestest_words:
         print(best_word)
