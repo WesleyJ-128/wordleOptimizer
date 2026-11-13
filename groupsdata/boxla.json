@@ -2436,6 +2436,11 @@
         "maxim",
         "waxen"
     ],
+    "[0, 2, 2, 0, 0]": [
+        "moxie",
+        "toxic",
+        "toxin"
+    ],
     "[1, 2, 0, 2, 0]": [
         "noble",
         "nobly"
@@ -2452,10 +2457,6 @@
         "tibia",
         "umbra",
         "zebra"
-    ],
-    "[0, 2, 2, 0, 0]": [
-        "toxic",
-        "toxin"
     ],
     "[0, 1, 0, 2, 2]": [
         "viola"
