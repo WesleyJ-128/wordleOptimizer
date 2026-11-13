@@ -3,6 +3,8 @@ from copy import copy
 import Pattern
 import os.path
 
+regen_data = False
+
 def score(guess_str: str, answer_str: str) -> Pattern.Pattern:
     GUESS_NULL = "+"
     ANS_NULL = "-"
@@ -64,15 +66,17 @@ def generate_word_data(guess_list, answer_list):
 with open(GUESS_LIST) as file:
     guess_list = file.readlines()
     guess_list = [x.strip() for x in guess_list]
-with open(ANSWER_LIST) as file:
-    answer_list = file.readlines()
-    answer_list = [x.strip() for x in answer_list]
 
-all_data = generate_word_data(guess_list, answer_list)[0]
+if regen_data:
+    with open(ANSWER_LIST) as file:
+        answer_list = file.readlines()
+        answer_list = [x.strip() for x in answer_list]
 
-for guess in all_data:
-    with open(os.path.join("groupsdata", f"{guess}.json"), "w") as f:
-        f.write(json.dumps(all_data[guess], indent=4))
+    all_data = generate_word_data(guess_list, answer_list)[0]
+
+    for guess in all_data:
+        with open(os.path.join("groupsdata", f"{guess}.json"), "w") as f:
+            f.write(json.dumps(all_data[guess], indent=4))
 
 
 def prompt_guess():
